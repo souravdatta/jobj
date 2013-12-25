@@ -1,4 +1,5 @@
 jobj
 ====
 
-A simple JavaScript object system with basic inheritance support.
+A simple JavaScript object system with basic inheritance support. Inheritance in JavaScript is done thourgh setting the `prototype` property of a function object. The property chains of prototype objects are inspected when a property is not found in the immediate object. `jobj` library offers an alternate way of doing the same albeit through the traditional ways found in Object oriented languages like C++, Java and Smalltalk. This wrapper makes it easy to create class hierarchies. A class is created by calling `Jobj.extend` and passing the name of the parent class. The second optional argument is a hash of all the instance variables and methods for the current object. The `init` function, if defined, becomes the constructor of the new class. But it is not automatically called if `new ClassName()` is used. To create an object with Jobj library, use `Jobj.create` method and pass all the initialization parameters to it along with the class name. The immediate parent class's methods and variables are available to the child object through `this.parent` hash.
+See the `jobj.html` for examples.
