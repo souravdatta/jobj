@@ -14,18 +14,24 @@
             
             var C2 = Jobj.extend(C1, {
                 init: function (name, value, type) {
-                    this.parent.init(name, value);
+                    this.base('init', name, value);
                     this.type = type;
                 },
                 info: function () {
-                    var info1 = this.parent.info();
+                    var info1 = this.base('info');
                     info1.push(this.type);
                     return info1;
+                },
+                newName: function (name) {
+                    this.name = name;
                 }
             });
             
             var c2 = Jobj.create(C2, 'my name', 'my value', 'my type');
             console.log(c2.info());
+            c2.newName('my new name');
+            console.log(c2.info());
+            console.log(c2.base('info'));
         </script>
     </head>
     <body>

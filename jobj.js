@@ -12,11 +12,27 @@ Jobj = (function () {
         
         dklass.prototype = new klass();
         dklass.prototype.parent = klass.prototype;
+        dklass.prototype.base = function (fn) {
+            if (this && this.parent && this.parent[fn]) {
+                if (typeof(this.parent[fn]) == 'function') {
+                    var args = [], indx;
+                    for (indx = 1; indx < arguments.length; indx++) {
+                        args.push(arguments[indx]);
+                    }
+                    return this.parent[fn].apply(this, args);
+                }
+                else {
+                    return this.parent[fn];
+                }
+            }
+        };
+        
         if (objFlags) {
             var prop;
             for (prop in objFlags) {
                 if (({}).hasOwnProperty.call(objFlags, prop) &&
-                    prop != 'parent') {
+                    prop != 'parent' &&
+                    prop != 'base') {
                     dklass.prototype[prop] = objFlags[prop];
                 }
             }
