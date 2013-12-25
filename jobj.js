@@ -1,3 +1,8 @@
+/*
+    Under MIT license. Please see accompanied LICENSE.txt file.
+    Copyright (c) Sourav Datta (soura.jagat@gmail.com)
+*/
+
 Jobj = (function () {
     var Jobj = {};
     
