@@ -6,7 +6,7 @@
 Jobj = (function () {
     var Jobj = {};
     
-    // Extend a class to create a new one   
+    // Extend a class to create a new one.   
     Jobj.extend = function (klass, objFlags) {
         var dklass = function () {};
         
@@ -25,7 +25,8 @@ Jobj = (function () {
         return dklass;
     };
     
-    Jobj.create = function(klass) {
+    // Create an object from a Jobj class.
+    Jobj.create = function(klass /*, and other init args */) {
         var args = [], indx;
         for (indx = 1; indx < arguments.length; indx++) {
             args.push(arguments[indx]);
@@ -39,6 +40,8 @@ Jobj = (function () {
         return inst;
     };
     
+    // A basic parent class which can be used to inherit all other classes
+    // from.
     Jobj.Class = function () {
         this.name = 'a Class';
     };

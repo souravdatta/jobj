@@ -16,8 +16,16 @@
                 init: function (name, value, type) {
                     this.parent.init(name, value);
                     this.type = type;
+                },
+                info: function () {
+                    var info1 = this.parent.info();
+                    info1.push(this.type);
+                    return info1;
                 }
             });
+            
+            var c2 = Jobj.create(C2, 'my name', 'my value', 'my type');
+            console.log(c2.info());
         </script>
     </head>
     <body>
