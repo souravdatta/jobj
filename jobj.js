@@ -5,35 +5,39 @@
 
 Jobj = (function () {
     var Jobj = {};
+    var genFunction = function (cont, fprop) {
+        return function (ctx) {
+            var args, indx;
+            args = [];
+            for (indx = 1; indx < arguments.length; indx++) {
+                args.push(arguments[indx]);
+            }
+            return cont[fprop].apply(ctx, args);
+        };
+    };
     
     // Extend a class to create a new one.   
     Jobj.extend = function (klass, objFlags) {
         var dklass = function () {};
+        var isOwner = ({}).hasOwnProperty;
+        var fprop;
         
         dklass.prototype = new klass();
-        dklass.prototype.parent = klass.prototype;
-        dklass.prototype.base = function (fn) {
-            if (this && this.parent && this.parent[fn]) {
-                if (typeof(this.parent[fn]) == 'function') {
-                    var args = [], indx;
-                    for (indx = 1; indx < arguments.length; indx++) {
-                        args.push(arguments[indx]);
-                    }
-                    return this.parent[fn].apply(this, args);
-                }
-                else {
-                    return this.parent[fn];
-                }
+        dklass.prototype._parent = {};
+        for (fprop in klass.prototype) {            
+            if (isOwner.call(klass.prototype, fprop) &&
+                fprop != '_parent' &&
+                typeof(klass.prototype[fprop]) == 'function') {                
+                dklass.prototype._parent[fprop] = genFunction(klass.prototype, fprop);
             }
-        };
-        
+        }
+                
         if (objFlags) {
             var prop;
             for (prop in objFlags) {
-                if (({}).hasOwnProperty.call(objFlags, prop) &&
-                    prop != 'parent' &&
-                    prop != 'base') {
-                    dklass.prototype[prop] = objFlags[prop];
+                if (isOwner.call(objFlags, prop) &&
+                    prop != '_parent') {
+                    dklass.prototype[prop] = objFlags[prop];                    
                 }
             }
         }
