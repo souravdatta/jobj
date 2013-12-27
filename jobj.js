@@ -23,20 +23,21 @@ Jobj = (function () {
         var fprop;
         
         dklass.prototype = new klass();
-        dklass.prototype._parent = {};
+        
+        // setup Class.parent to access base class functions
+        dklass.parent = {};
         for (fprop in klass.prototype) {            
             if (isOwner.call(klass.prototype, fprop) &&
-                fprop != '_parent' &&
+                fprop != 'parent' &&
                 typeof(klass.prototype[fprop]) == 'function') {                
-                dklass.prototype._parent[fprop] = genFunction(klass.prototype, fprop);
+                dklass.parent[fprop] = genFunction(klass.prototype, fprop);
             }
         }
                 
         if (objFlags) {
             var prop;
             for (prop in objFlags) {
-                if (isOwner.call(objFlags, prop) &&
-                    prop != '_parent') {
+                if (isOwner.call(objFlags, prop)) {
                     dklass.prototype[prop] = objFlags[prop];                    
                 }
             }

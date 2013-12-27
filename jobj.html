@@ -13,13 +13,14 @@
             });
             
             var C2 = Jobj.extend(C1, {
+                parent: {name: 'C2'},
                 init: function (name, value, type) {
-                    this._parent.init(this, name, value);
+                    C2.parent.init(this, name, value);
                     this.type = type;
                     console.log();
                 },
                 info: function () {
-                    var info1 = this._parent.info(this);
+                    var info1 = C2.parent.info(this);
                     info1.push(this.type);
                     return info1;
                 },
@@ -28,8 +29,18 @@
                 },
                 newType: function (type) {
                     this.type = type;
+                },
+                newValue: function (val) {
+                    this.value = val;
                 }
             });
+            
+            var C3 = Jobj.extend(C2, {
+                init: function (name, value, type) {
+                    C3.parent.init(this, name, value, type);
+                }
+            });
+            
             
             var c2 = Jobj.create(C2, 'my name', 'my value', 'my type');
             console.log(c2.info());
@@ -37,6 +48,12 @@
             console.log(c2.info());
             c2.newType('my new type');
             console.log(c2.info());
+            console.log(c2.parent.name);
+            c2.newValue('my new value');
+            console.log(c2.info());
+            
+            var c3 = Jobj.create(C3, 'one', 'two', 'three');
+            console.log(c3.info());
         </script>
     </head>
     <body>
