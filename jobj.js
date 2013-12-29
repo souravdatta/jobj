@@ -43,6 +43,9 @@ Jobj = (function () {
             }
         }
         
+        // Set _class to point to it's own class
+        dklass.prototype._class = dklass;
+        
         return dklass;
     };
     

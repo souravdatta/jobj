@@ -54,6 +54,11 @@
             
             var c3 = Jobj.create(C3, 'one', 'two', 'three');
             console.log(c3.info());
+            
+            var Klass = c3._class;
+            var c4 = Jobj.create(Klass, 'ini', 'mini', 'myni');
+            console.log(c4.info());
+            
         </script>
     </head>
     <body>
