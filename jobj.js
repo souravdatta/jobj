@@ -3,8 +3,8 @@
     Copyright (c) Sourav Datta (soura.jagat@gmail.com)
 */
 
-Jobj = (function () {
-    var Jobj = {};
+Jo = (function () {
+    var Jo = {};
     var genFunction = function (cont, fprop) {
         return function (ctx) {
             var args, indx;
@@ -17,7 +17,7 @@ Jobj = (function () {
     };
     
     // Extend a class to create a new one.   
-    Jobj.extend = function (klass, objFlags) {
+    Jo.extend = function (klass, objFlags) {
         var dklass = function () {};
         var isOwner = ({}).hasOwnProperty;
         var fprop;
@@ -25,12 +25,12 @@ Jobj = (function () {
         dklass.prototype = new klass();
         
         // setup Class.parent to access base class functions
-        dklass.parent = {};
+        dklass._p = {};
         for (fprop in klass.prototype) {            
             if (isOwner.call(klass.prototype, fprop) &&
-                fprop != 'parent' &&
+                fprop != '_p' &&
                 typeof(klass.prototype[fprop]) == 'function') {                
-                dklass.parent[fprop] = genFunction(klass.prototype, fprop);
+                dklass._p[fprop] = genFunction(klass.prototype, fprop);
             }
         }
                 
@@ -50,7 +50,7 @@ Jobj = (function () {
     };
     
     // Create an object from a Jobj class.
-    Jobj.create = function(klass /*, and other init args */) {
+    Jo.create = function(klass /*, and other init args */) {
         var args = [], indx;
         for (indx = 1; indx < arguments.length; indx++) {
             args.push(arguments[indx]);
@@ -66,9 +66,9 @@ Jobj = (function () {
     
     // A basic parent class which can be used to inherit all other classes
     // from.
-    Jobj.Class = function () {
+    Jo.Class = function () {
         this.name = 'a Class';
     };
     
-    return Jobj;
+    return Jo;
 })();

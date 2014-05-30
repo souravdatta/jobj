@@ -5,22 +5,22 @@
 <!doctype html>
 <html>
     <head>
-        <script src="jobj.js"></script>
+        <script src="Jobj.js"></script>
         <script>
-            var C1 = Jobj.extend(Jobj.Class, {
+            var C1 = Jo.extend(Jo.Class, {
                 init: function (name, value) { this.name = name; this.value = value; },
                 info: function () { return [this.name, this.value]; }
             });
             
-            var C2 = Jobj.extend(C1, {
+            var C2 = Jo.extend(C1, {
                 parent: {name: 'C2'},
                 init: function (name, value, type) {
-                    C2.parent.init(this, name, value);
+                    C2._p.init(this, name, value);
                     this.type = type;
                     console.log();
                 },
                 info: function () {
-                    var info1 = C2.parent.info(this);
+                    var info1 = C2._p.info(this);
                     info1.push(this.type);
                     return info1;
                 },
@@ -35,14 +35,14 @@
                 }
             });
             
-            var C3 = Jobj.extend(C2, {
+            var C3 = Jo.extend(C2, {
                 init: function (name, value, type) {
-                    C3.parent.init(this, name, value, type);
+                    C3._p.init(this, name, value, type);
                 }
             });
             
             
-            var c2 = Jobj.create(C2, 'my name', 'my value', 'my type');
+            var c2 = Jo.create(C2, 'my name', 'my value', 'my type');
             console.log(c2.info());
             c2.newName('my new name');
             console.log(c2.info());
@@ -52,11 +52,11 @@
             c2.newValue('my new value');
             console.log(c2.info());
             
-            var c3 = Jobj.create(C3, 'one', 'two', 'three');
+            var c3 = Jo.create(C3, 'one', 'two', 'three');
             console.log(c3.info());
             
             var Klass = c3._class;
-            var c4 = Jobj.create(Klass, 'ini', 'mini', 'myni');
+            var c4 = Jo.create(Klass, 'ini', 'mini', 'myni');
             console.log(c4.info());
             
         </script>
